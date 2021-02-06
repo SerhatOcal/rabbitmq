@@ -1,2 +1,0 @@
-rabbitmq-server start
-rabbitmq-plugins.bat enable rabbitmq_management
