@@ -1,6 +1,8 @@
 const amqp = require("amqplib");
 const queueName = process.argv[2] || "jobsQueue";
-const data = require("./data.json")
+const data = require("./data.json");
+const redis = require("redis");
+const client = redis.createClient();
 
 connect();
 
@@ -17,7 +19,17 @@ async function connect() {
 
         if(userInfo){
             console.log("İşlenen Kayıt", userInfo);
-            channel.ack(message);
+
+            client.set(
+                `user_${userInfo.id}`, 
+                JSON.stringify(userInfo), 
+                (error, replay) => {
+                    if (!error) {
+                        console.log("Response", replay);
+                        channel.ack(message);
+                    }
+                }
+            );
         }
     });
   } catch (error) {

@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "amqplib": "^0.6.0"
+    "amqplib": "^0.6.0",
+    "redis": "^3.0.2"
   }
 }
